@@ -15,9 +15,15 @@ export default function InputForm() {
       // Read the contents of the EditorState here.
       const root = $getRoot();
       const selection = $getSelection();
+      console.log("SELECTION: ", selection);
       setPost(root.__cachedText);
     });
   }
+
+  // TODO:
+  // Detect code block input
+  // Render code block in UI when code is entered
+  // render other types of characters
 
   useEffect(() => {
     const user = `User0${Math.floor(Math.random() * 100)}`;
