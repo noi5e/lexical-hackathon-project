@@ -9,19 +9,18 @@ export default function Restrospects() {
   const { documents, error } = useCollection("posts");
   return (
     <div className="posts">
-      <h4>Retrospects</h4>
       <div>
         {documents &&
           documents.length > 0 &&
-          documents.map((post) => (
-            <div key={post.id} className="post">
+          documents.map((post, index) => (
+            <div key={index} className="post">
               <div className="post-author">
-                <Avatar />
+                <Avatar src={post.avatar} />
                 <p className="name">{post.displayName}</p>
               </div>
 
               <div className="post-content">
-                <p>{post.content}</p>
+                <p className="content">{post.content}</p>
               </div>
               <div className="post-date">
                 <p className="date">

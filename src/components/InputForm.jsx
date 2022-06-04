@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { $getRoot, $getSelection } from "lexical";
 import { timestamp } from "../firebase/config";
 import { useFirestore } from "../hooks/useFirestore";
@@ -7,6 +7,8 @@ import Editor from "../Editor";
 export default function InputForm() {
   const [post, setPost] = useState("");
   const { addDocument, response } = useFirestore("posts");
+  const [user, setUser] = useState("");
+  const [avatar, setAvatar] = useState(null);
 
   function onChange(editorState) {
     editorState.read(() => {
@@ -17,19 +19,31 @@ export default function InputForm() {
     });
   }
 
-  const user = `User0${Math.floor(Math.random() * 100)}`;
+  useEffect(() => {
+    const user = `User0${Math.floor(Math.random() * 100)}`;
+    const avatars = [
+      { src: "/img/avatara.png" },
+      { src: "/img/avatar.png" },
+      { src: "/img/gamer.png" },
+      { src: "/img/man.png" },
+    ];
+    const avatar = avatars.sort(() => Math.random() - 0.5)[0];
+    setUser(user);
+    setAvatar(avatar.src);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const postToAdd = {
       displayName: user,
+      avatar: avatar,
       content: post,
       createdAt: timestamp.fromDate(new Date()),
       id: Math.random(),
     };
 
-    if (!response.error) {
+    if (!response.error && postToAdd.content !== "") {
       await addDocument(postToAdd);
     }
 

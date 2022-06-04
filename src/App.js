@@ -8,6 +8,7 @@ export default function App() {
     <div className="App">
       <InputForm />
       <Restrospects />
+      <em style={{ color: "grey" }}>Powered by the Lexical Team - 22Sum.2</em>
     </div>
   );
 }

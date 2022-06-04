@@ -43,7 +43,9 @@
 
 .posts {
   width: 50%;
-  margin: 5rem auto;
+  margin: 2rem auto;
+  height: 50vh;
+  overflow-y: scroll;
 }
 
 /* post list */
@@ -76,8 +78,13 @@
   margin: 4px 0 5px;
 }
 .date,
-.name {
+.name,
+.content {
   margin: 0;
+}
+
+.content {
+  color: black;
 }
 .post-content {
   color: var(--text-color);
