@@ -4,11 +4,13 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import ToolbarPlugin from "./ToolbarPlugin";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { EmoticonNode } from "./EmoticonNode";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { ListItemNode, ListNode } from "@lexical/list";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import EmoticonPlugin from "./EmoticonPlugin";
 
 function Placeholder() {
   return <div className="editor-placeholder">Enter some rich text...</div>;
@@ -29,6 +31,7 @@ const editorConfig = {
     QuoteNode,
     CodeNode,
     CodeHighlightNode,
+    EmoticonNode,
     TableNode,
     TableCellNode,
     TableRowNode,
@@ -49,6 +52,7 @@ export default function Editor({ onChange }) {
           />
           {/* Insert Plugins Here (see https://codesandbox.io/s/lexical-rich-text-example-forked-x8rgfk?file=/src/Editor.js) */}
           <OnChangePlugin onChange={onChange} />
+          <EmoticonPlugin />
         </div>
       </div>
     </LexicalComposer>
