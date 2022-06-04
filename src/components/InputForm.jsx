@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { $getRoot, $getSelection } from "lexical";
+import { timestamp } from "../firebase/config";
+import { useFirestore } from "../hooks/useFirestore";
 import Editor from "../Editor";
 
 export default function InputForm() {
   const [post, setPost] = useState("");
+  const { addDocument, response } = useFirestore("posts");
+
   function onChange(editorState) {
     editorState.read(() => {
       // Read the contents of the EditorState here.
@@ -13,7 +17,26 @@ export default function InputForm() {
     });
   }
 
-  const handleSubmit = () => {};
+  const user = `User0${Math.floor(Math.random() * 100)}`;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const postToAdd = {
+      displayName: user,
+      content: post,
+      createdAt: timestamp.fromDate(new Date()),
+      id: Math.random(),
+    };
+
+    if (!response.error) {
+      await addDocument(postToAdd);
+    }
+
+    if (!response.error) {
+      setPost("");
+    }
+  };
   return (
     <>
       <h1>Retrospective Journal</h1>
