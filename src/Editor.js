@@ -8,6 +8,7 @@ import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { ListItemNode, ListNode } from "@lexical/list";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
+import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
 
 function Placeholder() {
   return <div className="editor-placeholder">Enter some rich text...</div>;
@@ -36,7 +37,7 @@ const editorConfig = {
   ],
 };
 
-export default function Editor() {
+export default function Editor({ onChange }) {
   return (
     <LexicalComposer initialConfig={editorConfig}>
       <div className="editor-container">
@@ -47,6 +48,7 @@ export default function Editor() {
             placeholder={<Placeholder />}
           />
           {/* Insert Plugins Here (see https://codesandbox.io/s/lexical-rich-text-example-forked-x8rgfk?file=/src/Editor.js) */}
+          <OnChangePlugin onChange={onChange} />
         </div>
       </div>
     </LexicalComposer>
