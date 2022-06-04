@@ -4,7 +4,7 @@ import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import ToolbarPlugin from "./ToolbarPlugin";
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
-import { EmoticonNode } from "./EmoticonNode";
+import { EmoticonNode } from "./EmoticonNode.ts";
 import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { ListItemNode, ListNode } from "@lexical/list";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
