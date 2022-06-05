@@ -90,6 +90,14 @@
   color: var(--text-color);
   font-size: 0.9em;
 }
+.date {
+  color: var(--text-color);
+}
+.posted-date {
+  color: var(--text-color);
+  font-size: 0.9em;
+  margin-bottom: 1rem;
+}
 ul {
   list-style-type: none;
   margin: 0 !important;

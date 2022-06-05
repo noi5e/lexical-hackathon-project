@@ -23,7 +23,7 @@ export default function InputForm() {
   // TODO:
   // Detect code block input
   // Render code block in UI when code is entered
-  // render other types of characters
+  // clear the form after post
 
   useEffect(() => {
     const user = `User0${Math.floor(Math.random() * 100)}`;
@@ -42,6 +42,7 @@ export default function InputForm() {
     e.preventDefault();
 
     const postToAdd = {
+      date: new Date().toDateString(),
       displayName: user,
       avatar: avatar,
       content: post,

@@ -19,9 +19,16 @@ export default function Restrospects() {
                 <p className="name">{post.displayName}</p>
               </div>
 
+              {post.date && (
+                <div className="posted-date">
+                  <p className="date">{post.date}</p>
+                </div>
+              )}
+
               <div className="post-content">
                 <p className="content">{post.content}</p>
               </div>
+
               <div className="post-date">
                 <p className="date">
                   {formatDistanceToNow(post.createdAt.toDate(), {
