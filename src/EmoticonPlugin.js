@@ -5,14 +5,57 @@ import { TextNode } from "lexical";
 
 const colors = new Map([
   [":g:", ["green circle", "🟢"]],
-  [":y", ["yellow circle", "🟡"]],
-  [":r", ["red circle", "🔴"]],
+  [":y:", ["yellow circle", "🟡"]],
+  [":r:", ["red circle", "🔴"]],
+  [":G:", ["green circle", "🟢"]],
+  [":Y:", ["yellow circle", "🟡"]],
+  [":R:", ["red circle", "🔴"]],
+  ["🟢", ["green circle", "🟢"]],
+  ["🟡", ["yellow circle", "🟡"]],
+  ["🔴", ["red circle", "🔴"]],
 ]);
 
-function emoticonTransform(node) {
-  const textContent = node.getTextContent();
-  if (textContent === ":)") {
-    node.replace($createEmoticonNode("", "😀"));
+// function emoticonTransform(node) {
+//   const textContent = node.getTextContent();
+//   if (textContent === ":)") {
+//     node.replace($createEmoticonNode("", "😀"));
+//   }
+// }
+
+function findAndTransformColors(node) {
+  const text = node.getTextContent();
+  console.log(text);
+
+  for (let i = 0; i < text.length; i++) {
+    const emojiData = colors.get(text[i]) || colors.get(text.slice(i, i + 3));
+
+    if (emojiData !== undefined) {
+      console.log("Found it!");
+      const [emojiStyle, emojiText] = emojiData;
+      let targetNode;
+
+      if (i === 0) {
+        [targetNode] = node.splitText(i + 3);
+      } else {
+        [, targetNode] = node.splitText(i, i + 3);
+      }
+
+      const emoticonNode = $createEmoticonNode(emojiStyle, emojiText);
+      targetNode.replace(emoticonNode);
+      return emoticonNode;
+    }
+  }
+}
+
+function textNodeTransform(node) {
+  let targetNode = node;
+
+  while (targetNode && targetNode !== null) {
+    if (!targetNode.isSimpleText()) {
+      return;
+    }
+
+    targetNode = findAndTransformColors(targetNode);
   }
 }
 
@@ -20,7 +63,7 @@ function useEmoticons(editor) {
   useEffect(() => {
     const removeTransform = editor.registerNodeTransform(
       TextNode,
-      emoticonTransform
+      textNodeTransform
     );
     return () => {
       removeTransform();
