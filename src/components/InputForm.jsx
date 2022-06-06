@@ -1,21 +1,32 @@
 import { useState, useEffect } from "react";
-import { $getRoot, $getSelection } from "lexical";
+import {
+  $getRoot,
+  $getSelection,
+  $createParagraphNode,
+  $wrapLeafNodesInElements,
+  $isRangeSelection,
+} from "lexical";
 import { timestamp } from "../firebase/config";
 import { useFirestore } from "../hooks/useFirestore";
 import Editor from "../Editor";
+import { useEditorContext } from "../hooks/useEditorContext";
 
 export default function InputForm() {
   const [post, setPost] = useState("");
   const { addDocument, response } = useFirestore("posts");
   const [user, setUser] = useState("");
   const [avatar, setAvatar] = useState(null);
+  const { editor } = useEditorContext();
+  const [activeEditor, setActiveEditor] = useState(editor);
+
+  useEffect(() => {
+    setActiveEditor(editor);
+  }, [editor]);
 
   function onChange(editorState) {
     editorState.read(() => {
       // Read the contents of the EditorState here.
       const root = $getRoot();
-      const selection = $getSelection();
-      console.log("SELECTION: ", selection);
       setPost(root.__cachedText);
     });
   }
@@ -23,7 +34,7 @@ export default function InputForm() {
   // TODO:
   // Detect code block input
   // Render code block in UI when code is entered
-  // render other types of characters
+  // clear the form after post
 
   useEffect(() => {
     const user = `User0${Math.floor(Math.random() * 100)}`;
@@ -38,10 +49,16 @@ export default function InputForm() {
     setAvatar(avatar.src);
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, node) => {
     e.preventDefault();
 
+    console.log("Editor: ", activeEditor.getEditorState()._selection.anchor);
+
+    const wrapperType = activeEditor.getEditorState()._selection.anchor.type;
+
     const postToAdd = {
+      isCode: wrapperType === "element" ? true : false,
+      date: new Date().toDateString(),
       displayName: user,
       avatar: avatar,
       content: post,
@@ -56,7 +73,18 @@ export default function InputForm() {
     if (!response.error) {
       setPost("");
     }
+
+    const selection = $getSelection();
+
+    // activeEditor.update(() => {
+    //   if ($isRangeSelection(selection)) {
+    //     if (selection.isCollapsed()) {
+    //       $wrapLeafNodesInElements(selection, () => $createParagraphNode());
+    //     }
+    //   }
+    // });
   };
+
   return (
     <>
       <h1>Retrospective Journal</h1>

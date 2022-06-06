@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { $createEmoticonNode } from "./EmoticonNode.ts";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { TextNode } from "lexical";
+import { useEditorContext } from "./hooks/useEditorContext";
 
 const colors = new Map([
   [":g:", ["green circle", "🟢"]],
@@ -73,6 +74,11 @@ function useEmoticons(editor) {
 
 export default function EmoticonPlugin() {
   const [editor] = useLexicalComposerContext();
+  const { dispatch } = useEditorContext();
+  useEffect(() => {
+    dispatch({ type: "GET_EDITOR", payload: editor });
+  }, []);
+
   useEmoticons(editor);
   return null;
 }

@@ -26,7 +26,8 @@
 }
 
 .post-form {
-  max-width: 50%;
+  max-width: 800px;
+  min-width: 450px;
   margin: 20px auto;
   padding: 10px;
   border: 1px solid #ddd;
@@ -42,7 +43,8 @@
 }
 
 .posts {
-  width: 50%;
+  max-width: 750px;
+  min-width: 450px;
   margin: 2rem auto;
   height: 50vh;
   overflow-y: scroll;
@@ -89,6 +91,14 @@
 .post-content {
   color: var(--text-color);
   font-size: 0.9em;
+}
+.date {
+  color: var(--text-color);
+}
+.posted-date {
+  color: var(--text-color);
+  font-size: 0.9em;
+  margin-bottom: 1rem;
 }
 ul {
   list-style-type: none;
