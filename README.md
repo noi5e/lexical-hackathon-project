@@ -5,8 +5,8 @@ A journal app where programmers can post their weekly retrospectives. Featuring 
 A hackathon project for [Major League Hacking](https://mlh.io/)'s Summer '22 Fellowship program.
 
 Contributors:
-1. Lateef Azeez
-2. Will Gutierrez 
+1. Lateef Azeez @lateefazeez
+2. Will Gutierrez @noi5e
 
 ## Features
 
